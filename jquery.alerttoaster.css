@@ -1,0 +1,31 @@
+/**
+ * @copyright Copyright (c) 2011; Dan Bettles
+ * @author <a href="mailto:dan@danbettles.net">Dan Bettles</a>
+ * @license http://creativecommons.org/licenses/MIT/ MIT
+ */
+
+#alerttoaster {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    opacity: 0.5;
+}
+
+#alerttoaster-toast {
+    width: 376px;
+    height: 176px;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 12px
+}
+
+#alerttoaster-message,
+#alerttoaster-button {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
