@@ -41,14 +41,21 @@ jQuery.alertToaster = {
     },
 
     /**
-     * Creates a AlertToaster object
+     * Creates the AlertToaster object
      * 
      * @private
      * @return {AlertToaster}
+     * @todo Extract this
      */
     createToaster: function () {
         return (function () {
             var oToaster = this;
+        
+            /**
+             * @private
+             * @type {Integer}
+             */
+            this.baseZIndex = 9999;
         
             /**
              * @private
@@ -57,7 +64,7 @@ jQuery.alertToaster = {
             this.oButtonEl = jQuery('<p id="alerttoaster-button" />')
                 .append(jQuery('<a href="#"><span>Okay</span></a>')
                     .click(function () {
-                        oToaster.pushDown();
+                        oToaster.hide();
                         return false;
                     })
                 );
@@ -72,16 +79,24 @@ jQuery.alertToaster = {
              * @private
              * @type {jQuery}
              */
-            this.oToastEl = jQuery('<div id="alerttoaster-toast" style="display: none" />')
+            this.oToastEl = jQuery('<div id="alerttoaster-toast" />')
+                .css({
+                    display: 'none',
+                    zIndex: oToaster.baseZIndex + 1
+                })
                 .append(this.oMessageEl)
-                .append(this.oButtonEl);
+                .append(this.oButtonEl)
+                .appendTo('body');
         
             /**
              * @private
              * @type {jQuery}
              */
-            this.oToasterEl = jQuery('<div id="alerttoaster" style="display: none" />')
-                .append(this.oToastEl)
+            this.oToasterEl = jQuery('<div id="alerttoaster-background" />')
+                .css({
+                    display: 'none',
+                    zIndex: oToaster.baseZIndex
+                })
                 .appendTo('body');
         
             /**
@@ -89,7 +104,7 @@ jQuery.alertToaster = {
              * 
              * @param {String} p_message
              */
-            this.popUp = function (p_message) {
+            this.show = function (p_message) {
                 var oToaster = this;
 
                 this.setMessage(p_message);
@@ -112,7 +127,7 @@ jQuery.alertToaster = {
             /**
              * Hides the message
              */
-            this.pushDown = function () {
+            this.hide = function () {
                 var oToaster = this;
 
                 this.oToastEl.slideUp('fast', function () {
@@ -120,6 +135,20 @@ jQuery.alertToaster = {
                     oToaster.oToasterEl.fadeOut('fast');
                 });
             };
+
+            /**
+             * Positions the message
+             */
+            this.positionToast = function () {
+                //Horizontally centre the toast in the window
+                this.oToastEl.css('left', ((jQuery(window).width() / 2) - (this.oToastEl.width() / 2)) + 'px');
+            };
+
+            jQuery(window).resize(function () {
+                oToaster.positionToast();
+            });
+
+            this.positionToast();
 
             return this;
         }());
@@ -130,8 +159,8 @@ jQuery.alertToaster = {
      * 
      * @param {String} p_message
      */
-    popUp: function (p_message) {
-        this.getToaster().popUp(p_message);
+    show: function (p_message) {
+        this.getToaster().show(p_message);
     },
 
     /**
@@ -148,7 +177,7 @@ jQuery.alertToaster = {
     /**
      * Hides the message
      */
-    pushDown: function () {
-        this.getToaster().pushDown();
+    hide: function () {
+        this.getToaster().hide();
     }
 };

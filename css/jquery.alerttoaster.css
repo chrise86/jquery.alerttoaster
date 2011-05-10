@@ -4,27 +4,28 @@
  * @license http://creativecommons.org/licenses/MIT/ MIT
  */
 
-#alerttoaster {
+#alerttoaster-background {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 9999;
     width: 100%;
     height: 100%;
-    background-color: #333;
-    opacity: 0.5;
+    background-color: #000;
+    opacity: 0.4;
 }
 
 #alerttoaster-toast {
+    position: absolute;
+    top: 0;
+    /*left: 0;  *//*This will be set by the JavaScript*/
     width: 376px;
     height: 176px;
     background-color: #fff;
-    margin: 0 auto;
     padding: 12px
 }
 
-#alerttoaster-message,
-#alerttoaster-button {
+#alerttoaster-toast #alerttoaster-message,
+#alerttoaster-toast #alerttoaster-button {
     text-align: center;
     margin: 0;
     padding: 0;
