@@ -61,13 +61,18 @@ jQuery.alertToaster = {
              * @private
              * @type {jQuery}
              */
-            this.oButtonEl = jQuery('<p id="alerttoaster-button" />')
-                .append(jQuery('<a href="#"><span>Okay</span></a>')
-                    .click(function () {
-                        oToaster.hide();
-                        return false;
-                    })
-                );
+            this.oButtonEl = jQuery('<a href="#"><span>Okay</span></a>')
+                .click(function () {
+                    oToaster.hide();
+                    return false;
+                });
+        
+            /**
+             * @private
+             * @type {jQuery}
+             */
+            this.oButtonContainerEl = jQuery('<p id="alerttoaster-button" />')
+                .append(this.oButtonEl);
         
             /**
              * @private
@@ -79,13 +84,20 @@ jQuery.alertToaster = {
              * @private
              * @type {jQuery}
              */
+            this.oEdgeEl = jQuery('<div id="alerttoaster-edge" />');
+        
+            /**
+             * @private
+             * @type {jQuery}
+             */
             this.oToastEl = jQuery('<div id="alerttoaster-toast" />')
                 .css({
                     display: 'none',
                     zIndex: oToaster.baseZIndex + 1
                 })
+                .append(this.oEdgeEl)
                 .append(this.oMessageEl)
-                .append(this.oButtonEl)
+                .append(this.oButtonContainerEl)
                 .appendTo('body');
         
             /**
@@ -111,6 +123,7 @@ jQuery.alertToaster = {
 
                 this.oToasterEl.fadeIn('fast', function () {
                     oToaster.oToastEl.slideDown('fast');
+                    oToaster.oButtonEl.focus();
                 });
             };
         

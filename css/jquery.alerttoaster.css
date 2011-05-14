@@ -10,23 +10,55 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
-    opacity: 0.4;
+    background-color: #fff;
+    opacity: 0.5;
 }
 
 #alerttoaster-toast {
     position: absolute;
     top: 0;
     /*left: 0;  *//*This will be set by the JavaScript*/
-    width: 376px;
-    height: 176px;
+    width: 400px;
     background-color: #fff;
-    padding: 12px
+    -moz-box-shadow: 0 0 4px 4px #666;
+    -webkit-box-shadow: 0 0 4px 4px #666;
+    box-shadow: 0 0 4px 4px #666;
+}
+
+#alerttoaster-toast #alerttoaster-edge {
+    -moz-box-shadow: 0 0 5px 5px #bbb;
+    -webkit-box-shadow: 0 0 5px 5px #bbb;
+    box-shadow: 0 0 5px 5px #bbb;
 }
 
 #alerttoaster-toast #alerttoaster-message,
 #alerttoaster-toast #alerttoaster-button {
     text-align: center;
     margin: 0;
-    padding: 0;
+}
+
+#alerttoaster-toast #alerttoaster-message {
+    height: 90px;
+    padding: 24px;
+}
+
+#alerttoaster-toast #alerttoaster-button {
+    background: #f6f6f6;
+    padding: 12px;
+    border-top: 1px solid #000;
+}
+
+#alerttoaster-toast #alerttoaster-button a,
+#alerttoaster-toast #alerttoaster-button a:link,
+#alerttoaster-toast #alerttoaster-button a:visited,
+#alerttoaster-toast #alerttoaster-button a:hover {
+    text-decoration: none;
+    color: #000;
+    background: #eee;
+    padding: 2px 7px;
+    border: 1px solid #000;
+}
+
+#alerttoaster-toast #alerttoaster-button a:hover {
+    background: #ddd;
 }
