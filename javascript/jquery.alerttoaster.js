@@ -45,7 +45,6 @@ jQuery.alertToaster = {
      * 
      * @private
      * @return {AlertToaster}
-     * @todo Extract this
      */
     createToaster: function () {
         return (function () {
@@ -95,6 +94,15 @@ jQuery.alertToaster = {
                     display: 'none',
                     zIndex: oToaster.baseZIndex + 1
                 })
+                .click(function () {
+                    //Makes sure the toast is focused so the escape-key handler works
+                    oToaster.oButtonEl.focus();
+                })
+                .keydown(function (p_oEvent) {
+                    if (p_oEvent.keyCode === 27) {
+                        oToaster.hide();
+                    }
+                })
                 .append(this.oEdgeEl)
                 .append(this.oMessageEl)
                 .append(this.oButtonContainerEl)
@@ -104,10 +112,14 @@ jQuery.alertToaster = {
              * @private
              * @type {jQuery}
              */
-            this.oToasterEl = jQuery('<div id="alerttoaster-background" />')
+            this.oBackgroundEl = jQuery('<div id="alerttoaster-background" />')
                 .css({
                     display: 'none',
                     zIndex: oToaster.baseZIndex
+                })
+                .click(function () {
+                    //Makes sure the toast is focused so the escape-key handler works
+                    oToaster.oButtonEl.focus();
                 })
                 .appendTo('body');
         
@@ -121,7 +133,7 @@ jQuery.alertToaster = {
 
                 this.setMessage(p_message);
 
-                this.oToasterEl.fadeIn('fast', function () {
+                this.oBackgroundEl.fadeIn('fast', function () {
                     oToaster.oToastEl.slideDown('fast');
                     oToaster.oButtonEl.focus();
                 });
@@ -145,7 +157,7 @@ jQuery.alertToaster = {
 
                 this.oToastEl.slideUp('fast', function () {
                     oToaster.setMessage('');
-                    oToaster.oToasterEl.fadeOut('fast');
+                    oToaster.oBackgroundEl.fadeOut('fast');
                 });
             };
 
