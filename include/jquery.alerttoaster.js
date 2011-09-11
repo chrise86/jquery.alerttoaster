@@ -1,3 +1,4 @@
+/*globals jQuery*/
 /**
  * @copyright Copyright (c) 2011, Dan Bettles
  * @author <a href="mailto:dan@danbettles.net">Dan Bettles</a>
@@ -60,7 +61,7 @@ jQuery.alertToaster = {
              * @private
              * @type {jQuery}
              */
-            this.oButtonEl = jQuery('<a href="#"><span>Okay</span></a>')
+            this.oButtonEl = jQuery('<a href="#"><span>OK</span></a>')
                 .click(function () {
                     oToaster.hide();
                     return false;
@@ -91,8 +92,10 @@ jQuery.alertToaster = {
              */
             this.oToastEl = jQuery('<div id="alerttoaster-toast" />')
                 .css({
-                    display: 'none',
-                    zIndex: oToaster.baseZIndex + 1
+                    position: 'absolute',
+                    top: 0,
+                    zIndex: oToaster.baseZIndex + 1,
+                    display: 'none'
                 })
                 .click(function () {
                     //Makes sure the toast is focused so the escape-key handler works
@@ -114,8 +117,13 @@ jQuery.alertToaster = {
              */
             this.oBackgroundEl = jQuery('<div id="alerttoaster-background" />')
                 .css({
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    zIndex: oToaster.baseZIndex,
                     display: 'none',
-                    zIndex: oToaster.baseZIndex
+                    width: '100%',
+                    height: '100%'
                 })
                 .click(function () {
                     //Makes sure the toast is focused so the escape-key handler works
