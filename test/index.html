@@ -12,7 +12,7 @@
 
         <script type="text/javascript">
             jQuery('#test1').click(function () {
-                jQuery.alertToaster.show('Hello, user!');
+                jQuery.alertToaster.showAlert('Hello, user!');
             });
         </script>
 
@@ -20,7 +20,7 @@
 
         <script type="text/javascript">
             window.alert = function () {
-                jQuery.alertToaster.show.apply(jQuery.alertToaster, arguments);
+                jQuery.alertToaster.showAlert.apply(jQuery.alertToaster, arguments);
             };
 
             jQuery('#test2').click(function () {

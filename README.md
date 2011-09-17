@@ -10,6 +10,6 @@ of your page.
 
         jQuery(function () {
             window.alert = function () {
-                jQuery.alertToaster.show.apply(jQuery.alertToaster, arguments);
+                jQuery.alertToaster.showAlert.apply(jQuery.alertToaster, arguments);
             };
         });

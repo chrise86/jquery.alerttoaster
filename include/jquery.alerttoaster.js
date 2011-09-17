@@ -3,206 +3,221 @@
  * @copyright Copyright (c) 2011, Dan Bettles
  * @author <a href="mailto:dan@danbettles.net">Dan Bettles</a>
  * @license http://creativecommons.org/licenses/MIT/ MIT
- * @todo Review
- * @todo Document
  */
 jQuery.extend(true, {
 
-    /**
-     * Interface for the Alert Toaster widget
-     */
     alertToaster: {
 
         /**
          * @private
-         * @type AlertToaster
+         * @type Alert
          */
-        oToaster: null,
+        oAlert: null,
 
         /**
-         * @private
-         * @param {AlertToaster} p_oToaster
-         */
-        setToaster: function (p_oToaster) {
-            this.oToaster = p_oToaster;
-        },
-
-        /**
-         * @private
-         * @return AlertToaster
-         */
-        _getToaster: function () {
-            return this.oToaster;
-        },
-
-        /**
-         * Creates the AlertToaster object
+         * Sets the Alert object
          * 
          * @private
-         * @return AlertToaster
+         * @param {Alert} p_oAlert
          */
-        createToaster: function () {
-            return (function () {
-                var oToaster = this;
-
-                /**
-                 * @private
-                 * @type {Integer}
-                 */
-                this.baseZIndex = 9999;
-
-                /**
-                 * @private
-                 * @type {jQuery}
-                 */
-                this.oButtonEl = jQuery('<a href="#"><span>OK</span></a>')
-                    .click(function () {
-                        oToaster.hide();
-                        return false;
-                    });
-
-                /**
-                 * @private
-                 * @type {jQuery}
-                 */
-                this.oButtonContainerEl = jQuery('<p id="alerttoaster-button" />')
-                    .append(this.oButtonEl);
-
-                /**
-                 * @private
-                 * @type {jQuery}
-                 */
-                this.oMessageEl = jQuery('<p id="alerttoaster-message" />');
-
-                /**
-                 * @private
-                 * @type {jQuery}
-                 */
-                this.oToastEl = jQuery('<div id="alerttoaster-toast" />')
-                    .css({
-                        position: 'absolute',
-                        top: 0,
-                        zIndex: oToaster.baseZIndex + 1,
-                        display: 'none'
-                    })
-                    .click(function () {
-                        //Makes sure the toast is focused so the escape-key handler works
-                        oToaster.oButtonEl.focus();
-                    })
-                    .keydown(function (p_oEvent) {
-                        if (p_oEvent.keyCode === 27) {
-                            oToaster.hide();
-                        }
-                    })
-                    .append(this.oMessageEl)
-                    .append(this.oButtonContainerEl)
-                    .appendTo('body');
-
-                /**
-                 * @private
-                 * @type {jQuery}
-                 */
-                this.oBackgroundEl = jQuery('<div id="alerttoaster-background" />')
-                    .css({
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        zIndex: oToaster.baseZIndex,
-                        display: 'none',
-                        width: '100%',
-                        height: '100%'
-                    })
-                    .click(function () {
-                        //Makes sure the toast is focused so the escape-key handler works
-                        oToaster.oButtonEl.focus();
-                    })
-                    .appendTo('body');
-
-                /**
-                 * Displays the specified message
-                 * 
-                 * @param {String} p_message
-                 */
-                this.show = function (p_message) {
-                    var oToaster = this;
-
-                    this.setMessage(p_message);
-
-                    this.oBackgroundEl.fadeIn('fast', function () {
-                        oToaster.oToastEl.slideDown('fast');
-                        oToaster.oButtonEl.focus();
-                    });
-                };
-
-                /**
-                 * Sets the message
-                 * 
-                 * @private
-                 * @param {String} p_message
-                 */
-                this.setMessage = function (p_message) {
-                    this.oMessageEl.html(p_message);
-                };
-
-                /**
-                 * Hides the message
-                 */
-                this.hide = function () {
-                    var oToaster = this;
-
-                    this.oToastEl.slideUp('fast', function () {
-                        oToaster.setMessage('');
-                        oToaster.oBackgroundEl.fadeOut('fast');
-                    });
-                };
-
-                /**
-                 * Positions the message
-                 */
-                this.positionToast = function () {
-                    //Horizontally centre the toast in the window
-                    this.oToastEl.css('left', ((jQuery(window).width() / 2) - (this.oToastEl.width() / 2)) + 'px');
-                };
-
-                jQuery(window).resize(function () {
-                    oToaster.positionToast();
-                });
-
-                this.positionToast();
-
-                return this;
-            }());
+        setAlert: function (p_oAlert) {
+            this.oAlert = p_oAlert;
         },
 
         /**
-         * Returns the AlertToaster object, creating it first if necessary
+         * Returns the Alert object - only
          * 
          * @private
-         * @return AlertToaster
+         * @return Alert
          */
-        getToaster: function () {
-            if (this._getToaster() === null) {
-                this.setToaster(this.createToaster());
+        _getAlert: function () {
+            return this.oAlert;
+        },
+
+        /**
+         * Creates the Alert object
+         * 
+         * @private
+         * @return Alert
+         */
+        createAlert: function () {
+            var oAlertToaster = this,
+                //@todo Update this so it's the alert only - it's the alert, alone, that's created only the once
+                //@todo Z-index should be controlled by the toaster, probably
+                oAlert = (function () {
+                    var oAlert = this;
+
+                    /**
+                     * @private
+                     * @type {Integer}
+                     */
+                    this.baseZIndex = 9999;
+
+                    /**
+                     * @private
+                     * @type {jQuery}
+                     */
+                    this.oButtonEl = jQuery('<a href="#"><span>OK</span></a>')
+                        .click(function () {
+                            oAlert.hide();
+                            return false;
+                        });
+
+                    /**
+                     * @private
+                     * @type {jQuery}
+                     */
+                    this.oButtonContainerEl = jQuery('<p id="alerttoaster-button" />')
+                        .append(this.oButtonEl);
+
+                    /**
+                     * @private
+                     * @type {jQuery}
+                     */
+                    this.oMessageEl = jQuery('<p id="alerttoaster-message" />');
+
+                    /**
+                     * @private
+                     * @type {jQuery}
+                     */
+                    this.oAlertEl = jQuery('<div id="alerttoaster-alert" />')
+                        .css({
+                            position: 'absolute',
+                            top: 0,
+                            zIndex: oAlert.baseZIndex + 1,
+                            display: 'none'
+                        })
+                        .click(function () {
+                            //Makes sure the alert is focused so the escape-key handler works
+                            oAlert.oButtonEl.focus();
+                        })
+                        .keydown(function (p_oEvent) {
+                            if (p_oEvent.keyCode === 27) {
+                                oAlert.hide();
+                            }
+                        })
+                        .append(this.oMessageEl)
+                        .append(this.oButtonContainerEl)
+                        .appendTo('body');
+
+                    /**
+                     * @private
+                     * @type {jQuery}
+                     */
+                    this.oBackgroundEl = jQuery('<div id="alerttoaster-background" />')
+                        .css({
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            zIndex: oAlert.baseZIndex,
+                            display: 'none',
+                            width: '100%',
+                            height: '100%'
+                        })
+                        .click(function () {
+                            //Makes sure the alert is focused so the escape-key handler works
+                            oAlert.oButtonEl.focus();
+                        })
+                        .appendTo('body');
+
+                    /**
+                     * Returns the alert's jQuery
+                     * 
+                     * @return jQuery
+                     */
+                    this.getEl = function () {
+                        return this.oAlertEl;
+                    };
+
+                    /**
+                     * Sets the message
+                     * 
+                     * @private
+                     * @param {String} p_message
+                     */
+                    this.setMessage = function (p_message) {
+                        this.oMessageEl.html(p_message);
+                    };
+
+                    /**
+                     * Displays the specified message
+                     * 
+                     * @param {String} p_message
+                     */
+                    this.show = function (p_message) {
+                        var oAlert = this;
+
+                        this.setMessage(p_message);
+
+                        this.oBackgroundEl.fadeIn('fast', function () {
+                            oAlert.getEl().slideDown('fast');
+                            oAlert.oButtonEl.focus();
+                        });
+                    };
+
+                    /**
+                     * Hides the message
+                     */
+                    this.hide = function () {
+                        var oAlert = this;
+
+                        this.getEl().slideUp('fast', function () {
+                            oAlert.setMessage('');
+                            oAlert.oBackgroundEl.fadeOut('fast');
+                        });
+                    };
+
+                    return this;
+                }());
+
+            jQuery(window).resize(function () {
+                oAlertToaster.positionAlert();
+            });
+
+            return oAlert;
+        },
+
+        /**
+         * Returns the Alert object, creating it first if necessary
+         * 
+         * @private
+         * @return Alert
+         */
+        getAlert: function () {
+            if (this._getAlert() === null) {
+                this.setAlert(this.createAlert());
             }
 
-            return this._getToaster();
+            return this._getAlert();
         },
 
         /**
-         * Displays the specified message
+         * Horizontally-centres the alert in the window
+         * 
+         * @private
+         */
+        positionAlert: function () {
+            var oAlertEl = this.getAlert().getEl();
+            oAlertEl.css('left', ((jQuery(window).width() / 2) - (oAlertEl.width() / 2)) + 'px');
+        },
+
+        /**
+         * Displays the alert with the specified message
          * 
          * @param {String} p_message
-         * @todo Block until the message can be displayed
+         * @todo Block until the message can be displayed?
          */
-        show: function (p_message) {
-            this.getToaster().show(p_message);
+        showAlert: function (p_message) {
+            var oAlert = this.getAlert();
+            this.positionAlert();
+            oAlert.show(p_message);
         },
 
         /**
-         * Hides the message
+         * Hides the alert
          */
-        hide: function () {
-            this.getToaster().hide();
+        hideAlert: function () {
+            this.getAlert().hide();
         }
     }
 });
