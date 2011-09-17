@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>jQuery Alert Toaster Tests</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script type="text/javascript" src="../include/jquery.alerttoaster.js"></script>
+    </head>
+
+    <body>
+        <p><a href="#" id="test1">Show toast directly</a></p>
+
+        <script type="text/javascript">
+            jQuery('#test1').click(function () {
+                jQuery.alertToaster.show('Hello, user!');
+            });
+        </script>
+
+        <p><a href="#" id="test2">Show toast using <code>window.alert()</code></a></p>
+
+        <script type="text/javascript">
+            window.alert = function () {
+                jQuery.alertToaster.show.apply(jQuery.alertToaster, arguments);
+            };
+
+            jQuery('#test2').click(function () {
+                window.alert('Hello again, user!');
+            });
+        </script>
+
+        <p><a href="#" id="load_css">Load CSS</a></p>
+
+        <script type="text/javascript">
+            jQuery('#load_css').click(function () {
+                jQuery('head').append('<link rel="stylesheet" type="text/css" href="../public/jquery.alerttoaster.css"/>');
+                jQuery(this).hide();
+            });
+        </script>
+    </body>
+</html>
