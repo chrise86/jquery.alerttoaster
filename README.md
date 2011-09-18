@@ -1,15 +1,11 @@
 # jQuery Alert Toaster #
 
-jquery.alerttoaster is a jQuery plugin that displays alerts on a Mac OS X-style slide-down sheet.
+jQuery Alert Toaster is a jQuery plugin that displays alerts on a Mac OS X-style slide-down sheet.
 
-## Installation Instructions ##
+## Instructions ##
 
-1. Load `<plugin root>/public/jquery.alerttoaster.css` and `<plugin root>/public/jquery.alerttoaster.min.js` in the head
-of your page.
-1. Replace the browser's alert box with the slide-down sheet with something like the following.
+1. Load the JavaScript and CSS in the plugin's `public` directory in the head of your page - you need only install the
+contents of the `public` directory on your webserver.
+1. Greet the world with `jQuery.alertToaster.showAlert('Hello world!');`
 
-        jQuery(function () {
-            window.alert = function () {
-                jQuery.alertToaster.showAlert.apply(jQuery.alertToaster, arguments);
-            };
-        });
+Open `<plugin root>/public/index.html` in your browser to see some more examples.
